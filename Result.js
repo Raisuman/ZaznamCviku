@@ -7,17 +7,17 @@ const Result = {
       </div>
     `,
     mounted() {
-      // Kód pro načtení dat cvičení
+      
       axios.get(variables.API_URL + "Cviky").then((response) => {
         const cviky = response.data;
   
-        // Vytvoření objektu pro uchování celkového času cvičení pro každé unikátní datum
+        
         const cviceniCelkem = {};
   
-        // Výpočet celkového času cvičení pro každé unikátní datum
+       
         cviky.forEach((cvik) => {
           const datum = cvik.DenCviku.substring(0, 10);
-          const trvani = this.getZiskaniTrvaniCviceni(cvik); // Získání trvání cvičení v minutách
+          const trvani = this.getZiskaniTrvaniCviceni(cvik); 
   
           if (cviceniCelkem.hasOwnProperty(datum)) {
             cviceniCelkem[datum] += trvani;
@@ -26,7 +26,7 @@ const Result = {
           }
         });
   
-        // Příprava dat pro graf
+        
         const data = {
           labels: [],
           datasets: [
@@ -50,7 +50,7 @@ const Result = {
           data.datasets[0].data.push(celkoveMinuty);
         }
   
-        // Vykreslení line grafu
+       
         new Chart(this.$refs.lineChart, {
           type: "line",
           data: data,
@@ -78,9 +78,9 @@ const Result = {
     },
     methods: {
       getZiskaniTrvaniCviceni(cvik) {
-        const casCviku = cvik.CasCviku; // Předpokládáme, že casCviku je ve formátu "hh:mm"
+        const casCviku = cvik.CasCviku; 
         const [hodiny, minuty] = casCviku.split(":").map((str) => parseInt(str));
-        return hodiny * 60 + minuty; // Převést čas na celkový počet minut
+        return hodiny * 60 + minuty; 
       },
     },
   };
